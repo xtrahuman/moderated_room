@@ -1,0 +1,17 @@
+# Dependency directories
+node_modules/
+
+# Environment variables file (if you use dotenv)
+.env
+
+# SQL database files or directories
+*.sqlite
+*.db
+*.sql
+
+# Logs
+*.log
+
+# OS-generated files
+.DS_Store
+Thumbs.db
