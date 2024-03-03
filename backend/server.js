@@ -3,6 +3,8 @@ const express = require('express');
 const { sequelize } = require('./models');
 const groupRoutes = require('./routes/groupRoutes');
 const userRoutes = require('./routes/userRoutes');
+const groupMembershipRoutes = require('./routes/groupMembershipRoutes');
+const authRoutes = require('./routes/authRoutes')
 
 const bodyParser = require('body-parser');
 
@@ -21,8 +23,20 @@ app.use(bodyParser.json()); // Parse JSON request bodies
 app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded request bodies
 
 // Routes
-app.use('/api', groupRoutes);
-app.use('/api', userRoutes);
+
+app.use(function (req, res, next) {
+    res.header(
+      "Access-Control-Allow-Headers",
+      "x-access-token, Origin, Content-Type, Accept"
+    );
+    next();
+  });
+  
+app.use('/api', authRoutes);
+app.use('/api/groups', groupRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/group-memberships', groupMembershipRoutes);
+
 
 // Start server
 app.listen(PORT, async () => {

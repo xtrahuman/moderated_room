@@ -18,15 +18,6 @@ module.exports = {
       content: {
         type: Sequelize.TEXT
       },
-      userId: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Users',
-          key: 'id',
-          as: 'userId',
-        }
-        },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
