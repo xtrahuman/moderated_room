@@ -5,6 +5,7 @@ const groupRoutes = require('./routes/groupRoutes');
 const userRoutes = require('./routes/userRoutes');
 const groupMembershipRoutes = require('./routes/groupMembershipRoutes');
 const authRoutes = require('./routes/authRoutes')
+const joinNotificationRoutes = require('./routes/joinNotificationRoutes')
 
 const bodyParser = require('body-parser');
 
@@ -36,6 +37,7 @@ app.use('/api', authRoutes);
 app.use('/api/groups', groupRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/group-memberships', groupMembershipRoutes);
+app.use('/api/join-notifications', joinNotificationRoutes);
 
 
 // Start server

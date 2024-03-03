@@ -15,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'groupId',
         as: 'members',
       });
+
+      Group.belongsToMany(models.User, {
+        through: 'JoinNotification',
+        foreignKey: 'groupId',
+        as: 'join_members',
+      });
     }
   }
   Group.init({

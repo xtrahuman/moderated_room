@@ -15,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "userId",
         as: "groups",
       });
+
+      User.belongsToMany(models.Group, {
+        through: "JoinNotification",
+        foreignKey: "userId",
+        as: "join_groups",
+      });
     }
 
     async comparePassword(password) {
@@ -58,14 +64,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  // User.init({
 
-  //   email: DataTypes.STRING,
-  //   username: DataTypes.STRING,
-  //   password: DataTypes.STRING,
-  // }, {
-  //   sequelize,
-  //   modelName: 'User',
-  // });
   return User;
 };
