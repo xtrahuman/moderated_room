@@ -1,0 +1,105 @@
+
+
+.input-details input,
+.input-details select {
+  outline: none;
+  padding: 0.8rem 0.6rem;
+  border: 1px solid #200648;
+  border-radius: 10px;
+  font-size: 16px;
+  letter-spacing: 0.3ch;
+  margin-top: 1rem;
+  color: #333;
+}
+
+.input-details input:focus,
+.input-details select:focus {
+  border: 1px solid #3AAFA9;
+}
+
+.form-submit-button {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  outline: none;
+  border: none;
+  background: #3AAFA9;
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.avatar-preview {
+  margin-top: 1rem;
+  width: 55px; 
+  height: 55px;
+  border-radius: 50%;
+  border: 1px solid #3AAFA9;
+}
+
+.hidden {
+  display: none;
+}
+.input-details input {
+  outline: none;
+  padding: 0.8rem 0.6rem;
+  border: 1px solid #3AAFA9;
+  border-radius: 10px;
+  font-size: 16px;
+  letter-spacing: 0.3ch;
+  margin-top: 3rem;
+  color: #333
+}
+
+.input-width input {
+  width: 90%;
+}
+
+.input-details input:focus {
+  border: 1px solid #3AAFA9;
+}
+
+.form-submit-button {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  outline: none;
+  border: none;
+  background:#3AAFA9;
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 3rem;
+}
+
+.input-details input,
+.input-details select {
+  outline: none;
+  padding: 0.8rem 0.6rem;
+  border: 1px solid #200648;
+  border-radius: 10px;
+  font-size: 16px;
+  letter-spacing: 0.3ch;
+  margin-top: 1rem;
+  color: #333;
+}
+
+.input-details input:focus,
+.input-details select:focus {
+  border: 1px solid #3AAFA9;
+}
+
+.form-submit-button {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  outline: none;
+  border: none;
+  background: #3AAFA9;
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.hidden {
+  display: none;
+}

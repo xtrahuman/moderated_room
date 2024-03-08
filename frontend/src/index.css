@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*, ::after, ::before {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  background-color: #f3f7f0;
+  /* background-color: #3AAFA9; */
+  position: relative;
+  color: #17252A;
+  box-sizing: border-box;
+
+}
+
+form div.post-container {
+  margin-top: 5px !important;
+}
+
+.post-like-comment{
+  width: max-content;
+}
+
+.max-content {
+  width: max-content !important;
+}
+
+.debugger {
+  background-color: red;
+  border: 2px solid blue;
+}
+
+.chat-card {
+  width: calc(100% - 52px);
+}
+
+.message-nav-height {
+  height: calc(100vh - 7px);
+  height: calc(100svh - 7px);
+  height: calc(100lvh - 7px);
+}
+
+.post-detailname-width {
+  width: calc(100% - 60px)
+}
+
+.crop-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.static {
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 768px) {
+
+.menubar {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 3px;
+  border-radius: 3px;
+  cursor: pointer;
+  background: #fff;
+  z-index: 99;
+  /* position: relative; */
+}
+
+.mobile-hidden {
+  display: none;
+}
+
+.mobile-flex {
+  display: flex;
+}
+
+.mobile-block {
+  display: block;
+}
+.mobile-inlineblock {
+  display: inline-block;
+}
+
+.vector {
+  width: 33px;
+  height: 4px;
+  background-color: #3AAFA9;
+  margin: 8px 4px;
+  z-index: 1000;
+  position: relative;
+}
+
+#mobile_menu.toggle-menu .vector:nth-child(2) {
+  opacity: 0;
+}
+
+#mobile_menu.toggle-menu .vector:nth-child(1) {
+  transform: translateY(12.42px) rotate(45deg);
+}
+
+#mobile_menu.toggle-menu .vector:nth-child(3) {
+  transform: translateY(-12.42px) rotate(-45deg);
+}
+
+.nav-flex {
+  background-color: #fff;
+  display: block;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: -100%;
+  padding-top: 40px;
+  z-index: 9;
+  transition: all 0.5s ease;
+  overflow-y: auto;
+}
+
+.nav-flex.toggle {
+  left: 0;
+  transition: all 0.5s ease;
+}
+
+.nav-flex ul {
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+  margin-top: 30px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.nav-flex ul li {
+  margin-left: 0;
+  text-align: right;
+  list-style-type: none;
+  margin-top: 10px;
+  font-weight: 500;
+}
+
+}
