@@ -14,7 +14,7 @@ const INITIAL_STATE = {
   otherUsers: [],
   error: null,
   otherUsersError: null,
-  userLoading: false,
+  userLoading: true,
   otherUsersLoading: false,
   loggedin: false,
 };

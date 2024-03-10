@@ -1,9 +1,8 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { userprofile } from "../utility";
 import create_room_membership, { get_all_room_membership } from "../redux/room_membership/action";
-// import createRoomMembership, { getRoomMembership } from "../redux/post_roomMember/action";
 
 const styles = {
   roomContainer: {
@@ -32,7 +31,6 @@ const RoomList = ({ rooms }) => {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     userProfile = userprofile();
-    // dispatch(getRoomMembership());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -44,8 +42,6 @@ const RoomList = ({ rooms }) => {
     );
     return room_member;
   };
-
-  const setDomByStatus = () => {};
 
   return (
     <div className="[&>*:nth-child(1)]:rounded-t-lg w-full">

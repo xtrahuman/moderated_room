@@ -11,14 +11,19 @@ import {
 import { userprofile } from "../utility";
 import { useEffect } from "react";
 import { getAllRoom, getRoom } from "../redux/room/action";
-import { getOtherUserDetails, getOtherUsersProfile } from "../redux/authentication/action";
+import {
+  getOtherUserDetails,
+  getOtherUsersProfile,
+} from "../redux/authentication/action";
 
 const Notifications = () => {
   const { awaitingRoomMember } = useSelector(
     (state) => state.roomMemberReducer
   );
   const { rooms } = useSelector((state) => state.roomReducer);
-  const { user, loggedin, otherUsers } = useSelector((state) => state.userDetails);
+  const { user, loggedin, otherUsers } = useSelector(
+    (state) => state.userDetails
+  );
   const dispatch = useDispatch();
 
   let userProfile = userprofile();
@@ -27,11 +32,11 @@ const Notifications = () => {
     userProfile = userprofile();
     dispatch(get_awaiting_room_membership(userProfile?.token));
     dispatch(getAllRoom(userProfile));
-    dispatch(getOtherUserDetails(userProfile?.token))
+    dispatch(getOtherUserDetails(userProfile?.token));
     return () => {
       dispatch(getAwaitingRoomMember([]));
       dispatch(getRoom([]));
-      dispatch(getOtherUsersProfile([]))
+      dispatch(getOtherUsersProfile([]));
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -46,15 +51,15 @@ const Notifications = () => {
     return roomMember;
   };
 
-//   const acceptUser = (group_uuid, callback, token, status) => {
+  //   const acceptUser = (group_uuid, callback, token, status) => {
 
-//     dispatch(updateRoomMembershipSuccess(group_uuid, callback, token, status));
-  
-// };
+  //     dispatch(updateRoomMembershipSuccess(group_uuid, callback, token, status));
 
-//   const rejectUser = () => {
-//     dispatch();
-//   };
+  // };
+
+  //   const rejectUser = () => {
+  //     dispatch();
+  //   };
 
   return (
     <div className="flex w-full md:flex-row flex-col">
@@ -62,40 +67,47 @@ const Notifications = () => {
         <div className="flex mb-2 justify-center py-6 bg-white border-b-2 border-[#f3f7f0]">
           <h1 className="text-homegreen text-xl font-bold">Notifications</h1>
         </div>
-        <div className="[&>*:nth-child(1)]:rounded-t-lg w-full">
-          {awaitingRoomMember?.map(({ id, groupId, userId, uuid }) => (
-            <div
-              className="flex p-4 bg-white border-t-2 flex-col border-[#f3f7f0] first:border-t-0 shadow-xs shadow-[#3AAFA9] z-1 w-full"
-              key={id}
-            >
-              <p>
-                <span className="font-bold">{roomUser(userId)?.username}</span> is requesting to
-                join{' '}
-                <span className="font-bold">{memberRoom(groupId)?.name}</span>
-              </p>
+        {awaitingRoomMember?.length === 0 ? (
+          <p className="text-center pt-5">you have no notification</p>
+        ) : (
+          <div className="[&>*:nth-child(1)]:rounded-t-lg w-full">
+    
+            {awaitingRoomMember?.map(({ id, groupId, userId, uuid }) => (
+              <div
+                className="flex p-4 bg-white border-t-2 flex-col border-[#f3f7f0] first:border-t-0 shadow-xs shadow-[#3AAFA9] z-1 w-full"
+                key={id}
+              >
+                <p>
+                  <span className="font-bold">
+                    {roomUser(userId)?.username}
+                  </span>{" "}
+                  is requesting to join{" "}
+                  <span className="font-bold">{memberRoom(groupId)?.name}</span>
+                </p>
 
-              <div className="flex mt-2 gap-2">
-                <MyModal
-                  name="accept"
-                  group_uuid={uuid}
-                  token={userProfile?.token}
-                  status="verified"
-                  content="Are you sure you want to accept this user request?"
-                  btnStyle="bg-[#28a745]"
-                  callback={update_room_membership}
-                />
-                <MyModal
-                  name="reject"
-                  group_uuid={uuid}
-                  token={userProfile?.token}
-                  content="Are you sure you want to reject this user request?"
-                  btnStyle="bg-[#dc3545]"
-                  callback={delete_room_membership}
-                />
+                <div className="flex mt-2 gap-2">
+                  <MyModal
+                    name="accept"
+                    group_uuid={uuid}
+                    token={userProfile?.token}
+                    status="verified"
+                    content="Are you sure you want to accept this user request?"
+                    btnStyle="bg-[#28a745]"
+                    callback={update_room_membership}
+                  />
+                  <MyModal
+                    name="reject"
+                    group_uuid={uuid}
+                    token={userProfile?.token}
+                    content="Are you sure you want to reject this user request?"
+                    btnStyle="bg-[#dc3545]"
+                    callback={delete_room_membership}
+                  />
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

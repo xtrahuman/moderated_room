@@ -2,63 +2,50 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { localBackendUrl } from "../utility";
 import "./form.css";
+import axios from "axios";
 
 function SignUp() {
   const navigate = useNavigate();
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
 
-  // const avatars = [
-  //   "avatar1.png",
-  //   "avatar2.png",
-  //   "avatar3.png",
-  //   "avatar4.png",
-  //   "avatar5.png",
-  //   "avatar6.png",
-  //   "avatar7.png",
-  //   "avatar8.png",
-  //   "avatar9.png",
-  //   "avatar10.png",
-  // ];
 
   const signup = async () => {
     const userData = {
-      firstname,
-      lastname,
+      firstName,
+      lastName,
       email,
       password,
-      username
+      username,
     };
 
-    await fetch(`${localBackendUrl}/users`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
+    axios
+      .post(`${localBackendUrl}/signup`, userData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        // response.data;
         resetValues();
         navigate("/login");
       })
       .catch((err) => {
-
-        return (err.message);
+        return err.message;
       });
   };
 
-  const resetValues =() => {
+  const resetValues = () => {
     setEmail("");
     setPassword("");
     setConfirmPassword("");
     setUsername("");
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -77,20 +64,20 @@ function SignUp() {
         <div className="flex gap-2 item-center">
           <div className="input-details">
             <input
-              id="firstname"
+              id="firstName"
               type="text"
               onChange={(e) => setFirstName(e.target.value)}
-              value={firstname}
+              value={firstName}
               placeholder="Firstname"
               required
             />
           </div>
           <div className="input-details">
             <input
-              id="lastname"
+              id="lastName"
               type="text"
               onChange={(e) => setLastName(e.target.value)}
-              value={lastname}
+              value={lastName}
               placeholder="Lastname"
               required
             />
@@ -110,14 +97,13 @@ function SignUp() {
           <input
             id="username"
             onChange={(e) => setUsername(e.target.value)}
-            value={email}
+            value={username}
             placeholder="Username"
             type="text"
             required
           />
         </div>
-   
-       
+
         <div className="flex gap-2 item-center">
           <div className="input-details">
             <input

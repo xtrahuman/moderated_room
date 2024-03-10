@@ -4,15 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector, useDispatch } from "react-redux";
 import handleMessageInterface from "../../redux/domManipulation/action";
 import { v4 as uuidv4 } from 'uuid';
-import initialCreateUserAIMessage, {
-  createUserAIMessage,
-  getConversationMessages,
-  user_conversation_messages,
-} from "../../redux/ai_message/action";
-import createMessage, {
-  getUserRecipientMessages,
-  user_recipient_messages,
-} from "../../redux/message/action";
+
 import { getOtherUserDetails, getOtherUsersProfile } from "../../redux/authentication/action";
 import { userprofile, formatDateAndTime } from "../../utility";
 import { FaAngleLeft } from "react-icons/fa6";
@@ -22,45 +14,7 @@ import {
   faMicrophone,
 } from "@fortawesome/free-solid-svg-icons";
 import "./chat.css";
-
-
-
-// const handleInputChange = (e) => {
-//   setInputMessage(e.target.value);
-// };
-// const handleKeyPress = (e) => {
-//   if (e && e.key === "Enter" && inputMessage.trim() !== "") {
-//     const data = {
-//       content: inputMessage,
-//     };
-
-//     const dataInfo = {
-//       id: uuidv4(),
-//       role: "user",
-//       conversation_id: message_id,
-//       content: inputMessage,
-//       created_at: new Date(),
-//       updated_at: new Date(),
-//       bot: {
-//           username: "AI Assistant",
-//           avatarUrl: "bot.png"
-//       },
-//       user: {
-//           username: user.username,
-//           avatarUrl: user.avatarUrl
-//       }
-//   }
-//     const cloneArray = [...latestMessage,dataInfo]
-
-//     // setlatestMessage(cloneArray)
-
-//     dispatch(user_conversation_messages(cloneArray))
-//     setInputMessage("")
-
-//     dispatch(createUserAIMessage(data, message_id, userProfile, cloneArray));
-//     // scrollToBottom();
-//   }
-// };
+import { getRoomDetail, roomDetail } from "../../redux/room/action";
 
 const Message = ({ message, loggedin, user, page }) => {
   const { content, created_at } = message;
@@ -86,85 +40,15 @@ if (page ==='messageUserDetail') {
   );
 };
 
-// const UserChatApp = ({ page }) => {
-//   const { userRecieverMessages } = useSelector((state) => state.messageReducer);
-//   const [inputMessage, setInputMessage] = useState("");
-//   const [latestMessage, setlatestMessage] = useState([]);
-
-//   const { user } = useSelector(
-//     (state) => state.userDetails
-//   );
-
-//   const dispatch = useDispatch();
-//   const { message_id } = useParams();
-//   let userProfile = userprofile();
-
-//   const handleInputChange = (e) => {
-//     setInputMessage(e.target.value);
-//   };
-
-//   const handleKeyPress = (e) => {
-//     if (e && e.key === "Enter" && inputMessage.trim() !== "") {
-//       console.log("Message sent:", inputMessage);
-//       const data = {
-//         content: inputMessage,
-//         recipient_id: message_id,
-//         sender_id: user.id,
-//       };
-//       dispatch(createMessage(data, userProfile, () => setInputMessage("")));
-//       // scrollToBottom();
-//     }
-//   };
-
-//   useEffect(() => {
-//      // eslint-disable-next-line react-hooks/exhaustive-deps
-//     userProfile = userprofile();
-//     dispatch(getOtherUserDetails(userProfile?.token, message_id));
-//     dispatch(getUserRecipientMessages(message_id, 1, userProfile));
-
-//     return () => {
-//       dispatch(getOtherUsersProfile({}));
-//       dispatch(user_recipient_messages([]))
-//     }
-//     // eslint-disable-next-line react-hooks/exhaustive-deps
-//   }, [message_id]);
-//   // const scrollToBottom = () => {
-//   //   // Scroll to the bottom of the messages container
-//   //   messagesContainerRef.current.scrollTop =
-//   //     messagesContainerRef.current.scrollHeight;
-//   // };
-
-//   useEffect(() => {
-//     console.log("Redux State:", userRecieverMessages);
-//     if (userRecieverMessages && userRecieverMessages.messages) {
-//       setlatestMessage([...userRecieverMessages.messages].reverse());
-//     }
-//     return () => {
-//       setlatestMessage([])
-//     }
-//   }, [userRecieverMessages]);
-
-  
-//   return (
-//     <ChatApp
-//       latestMessage={latestMessage}
-//       inputMessage={inputMessage}
-//       handleKeyPress={handleKeyPress}
-//       page={page}
-//       handleInputChange={handleInputChange}
-//     />
-//   );
-// };
 
 export const UserChatApp = ({ page }) => {
-  // const { userAiMessages } = useSelector((state) => state.aiMessageReducer);
-  const navigate = useNavigate();
+
   const [inputMessage, setInputMessage] = useState("");
   const [latestMessage, setlatestMessage] = useState([]);
   const { user } = useSelector((state) => state.userDetails);
   const dispatch = useDispatch();
-  // const { message_id } = useParams();
   let userProfile = userprofile();
+  const {room_uuid} = useParams()
 
   const handleInputChange = (e) => {
     setInputMessage(e.target.value);
@@ -196,10 +80,6 @@ export const UserChatApp = ({ page }) => {
       
       setlatestMessage(cloneArray)
       setInputMessage("")
-
-      dispatch(
-        initialCreateUserAIMessage(data, userProfile, cloneArray, (conversation_id) => navigate(`/messages/ai/${conversation_id}`))
-      );
       // scrollToBottom();
     }
   };
@@ -210,6 +90,7 @@ export const UserChatApp = ({ page }) => {
     dispatch(getOtherUserDetails(userProfile?.token, userProfile?.userId));
     // eslint-disable-next-line react-hooks/exhaustive-deps
     // scrollToBottom();
+
     return () => {
       dispatch(getOtherUsersProfile({}))
     }
@@ -225,57 +106,6 @@ export const UserChatApp = ({ page }) => {
     />
   );
 };
-// export const AiChatApp = ({ page }) => {
-//   const { userAiMessages } = useSelector((state) => state.aiMessageReducer);
-//   const [inputMessage, setInputMessage] = useState("");
-//   const [latestMessage, setlatestMessage] = useState([]);
-//   const { user } = useSelector((state) => state.userDetails);
-//   const dispatch = useDispatch();
-//   const { message_id } = useParams();
-//   let userProfile = userprofile();
-
-  
-
-//   useEffect(() => {
-//      // eslint-disable-next-line react-hooks/exhaustive-deps
-//     userProfile = userprofile();
-//     dispatch(getOtherUserDetails(userProfile?.token, userProfile?.userId));
-//     dispatch(getConversationMessages(message_id, userProfile));
-//     // eslint-disable-next-line react-hooks/exhaustive-deps
-//     // scrollToBottom();
-//     return () => {
-//       dispatch(getOtherUsersProfile({}));
-//       dispatch(user_conversation_messages([]))
-//     }
-//   }, [message_id]);
-//   // const scrollToBottom = () => {
-//   //   // Scroll to the bottom of the messages container
-//   //   messagesContainerRef.current.scrollTop =
-//   //     messagesContainerRef.current.scrollHeight;
-//   // };
-
-//   useEffect(() => {
-//     console.log("Redux State:", userAiMessages);
-//     if (userAiMessages) {
-//       setlatestMessage([...userAiMessages]);
-//     }
-
-//     return () => {
-//       setlatestMessage([]);
-//     }
-//   }, [userAiMessages]);
-//   console.log(userAiMessages, "latest message");
-
-//   return (
-//     <ChatApp
-//       latestMessage={latestMessage}
-//       inputMessage={inputMessage}
-//       handleKeyPress={handleKeyPress}
-//       page={page}
-//       handleInputChange={handleInputChange}
-//     />
-//   );
-// };
 
 const ChatApp = ({
   latestMessage,
@@ -284,22 +114,31 @@ const ChatApp = ({
   page,
   handleInputChange,
 }) => {
-  let { user, otherUser, loggedin } = useSelector(
+  let { user, loggedin } = useSelector(
     (state) => state.userDetails
   );
-
+  const {room_uuid} = useParams()
+  const { room } = useSelector((state) => state.roomReducer);
   const dispatch = useDispatch()
 
-  if (page === 'messageUserDetail'){
-    otherUser = {
-      username: "Chat Assistant-AI",
-      avatarUrl: "bot.png"
-    }
-  } 
+  let userProfile = userprofile();
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+   userProfile = userprofile();
+   dispatch(getOtherUserDetails(userProfile?.token, userProfile?.userId));
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+   // scrollToBottom();
+   dispatch(getRoomDetail(room_uuid,userProfile))
+   return () => {
+     dispatch(getOtherUsersProfile({}))
+     dispatch(roomDetail)
+   }
+ }, [room_uuid]);
+  // const roomsContainerRef = useRef(null);
 
-
-
-  // const messagesContainerRef = useRef(null);
+  const getFirstLetter = (roomName) => {
+    return roomName?.charAt(0).toUpperCase();
+  };
 
   return (
     <div className="center">
@@ -310,24 +149,34 @@ const ChatApp = ({
           <FaAngleLeft 
           onClick={() => dispatch(handleMessageInterface(false))}
           className="md:hidden cursor-pointer text-lg text-homegreen angle-left mobile-flex text-left" />
-            <img
-              src={
-                process.env.PUBLIC_URL +
-                `/project_avatar/${otherUser?.avatarUrl}`
-              }
-              alt={otherUser.username}
-              className="md:top-5"
-            />
+                <div
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    maxWidth: "40px",
+                    borderRadius: "50%",
+                    // marginRight: "12px",
+                    fontSize: "30px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  className="bg-homegreen md:top-5 text-white"
+                >
+                  <span>{getFirstLetter(room?.name)}</span>
+                </div>
           </div>
-          <div className="name">{otherUser.username}</div>
-          <div className="seen">Today at {formatDateAndTime(new Date(), "chat")}</div>
+          <div className="name">{room?.name}</div>
+          <div className="font-light text-md">{room?.description}</div>
+          <div className="seen">created at {formatDateAndTime(room.createdAt, "chat")}</div>
         </div>
         <div
-          className="messages"
+          className="rooms"
           id="chat"
-          // ref={messagesContainerRef}
+          // ref={roomsContainerRef}
         >
           <div>
+          <p className="text-center pt-5 mb-[40vh]">{room?.content}</p>
             {latestMessage?.map((message) => (
               <Message
                 key={message.id}

@@ -1,21 +1,20 @@
 import {
   MAKEROOMSTART,
   GETROOMSUCCESS,
-  GETUSERLIKEDPOSTSUCCESS,
   MAKEROOMFAILURE,
   MAKEROOMSUCCESS,
-  GETPOSTDETAILSUCCESS,
+  GETROOMDETAILSUCCESS,
 } from "./action";
 
 const INITIAL_STATE = {
-  post: {},
+  room: {},
   rooms: [],
   error: null,
   loading: false,
   message: null,
 };
 
-const postReducer = (state = INITIAL_STATE, action) => {
+const roomReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case MAKEROOMSTART:
       return {
@@ -28,17 +27,11 @@ const postReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         rooms: action.payload,
       };
-    case GETUSERLIKEDPOSTSUCCESS:
+    case GETROOMDETAILSUCCESS:
       return {
         ...state,
         loading: false,
-        // likedrooms: action.payload,
-      };
-    case GETPOSTDETAILSUCCESS:
-      return {
-        ...state,
-        loading: false,
-        post: action.payload,
+        room: action.payload,
       };
     case MAKEROOMSUCCESS:
       return {
@@ -58,4 +51,4 @@ const postReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default postReducer;
+export default roomReducer;

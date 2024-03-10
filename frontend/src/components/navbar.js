@@ -10,7 +10,6 @@ import { userprofile } from "../utility";
 import { BsChevronDown } from "react-icons/bs";
 import { RiHome7Line } from "react-icons/ri";
 import { MdOutlineMessage } from "react-icons/md";
-import { IoPersonCircleOutline } from "react-icons/io5";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { useLocation } from "react-router-dom";
 
@@ -26,7 +25,6 @@ const Navbar = () => {
   const { user, loggedin } = useSelector((state) => state.userDetails);
   const { messageOpen } = useSelector((state) => state.domStatus);
   const dispatch = useDispatch();
-  // const navigate = useNavigate()
   const location = useLocation();
 
   const NavVariable = [
@@ -38,36 +36,19 @@ const Navbar = () => {
     },
     {
       id: 2,
-      name: "messages",
-      link: "/messages",
+      name: "rooms",
+      link: "/rooms",
       icon: <MdOutlineMessage />,
     },
-    // {
-    //   id: 3,
-    //   name: "search",
-    //   link: "/search",
-    //   icon: <FiSearch />,
-    // },
     {
       id: 4,
       name: "notification",
       link: "/notification",
       icon: <IoIosNotificationsOutline />,
     },
-    // {
-    //   id: 5,
-    //   name: "group",
-    //   link: "/group",
-    //   icon: <HiOutlineUserGroup />,
-    // },
   ];
 
   const LoggedInVar = [
-    {
-      id: 1,
-      name: "profile",
-      link: `/profile/${user?.id}`,
-    },
     {
       id: 4,
       name: "logout",
@@ -113,7 +94,7 @@ const Navbar = () => {
     <Container className="shadow-sm relative bg-white shadow-[#D7F7CA]">
       <div
         className={`menubar absolute z-[11] ${
-          location.pathname.includes("messages") && messageOpen
+          location.pathname.includes("rooms") && messageOpen
             ? "mobile-hidden"
             : "menubar"
         }`}
@@ -132,12 +113,12 @@ const Navbar = () => {
       >
         <ul className="nav-header a-center flex flex-col items-center gap-x-3 w-40%">
           <NavLink onClick={closeMobileMenu} to="/">
-            <img className="w-[100px] h-[auto]" src={Icon} alt="logo" />
+            <span className="font-medium text-lg font-sans text-homegreen"><span className="text-3xl">R</span>oomx</span>
           </NavLink>
         </ul>
         <ul className="nav-ul md:flex  md:flex-col grid justify-center md:gap-y-5  w-[60%]  md:h-[100vh] h-[70vh] items-start a-center">
           {NavVariable.map((NavVar) =>
-            ["profile", "messages"].includes(NavVar.name) ? (
+            ["profile", "rooms"].includes(NavVar.name) ? (
               <li key={NavVar.id}>
                 <NavLink
                   to={loggedin ? NavVar.link : "/login"}

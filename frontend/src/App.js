@@ -4,8 +4,6 @@ import ProtectedRoute from "./components/protectedRoutes";
 import Navbar from "./components/navbar";
 import { useSelector } from "react-redux";
 import Home from "./components/home";
-// import UserProfileDetails from "./components/profileDetails";
-// import PostDetails from "./components/";
 import MessageHome from "./components/message";
 import MessageContent from "./components/message/messageContent";
 import Login from "./components/login";
@@ -29,7 +27,7 @@ function Wrapper({ children, className, ...rest }) {
 
 const App = () => {
   // //   console.log('Current route:', location.pathname);
-  const { loggedin } = useSelector((state) => state.userDetails);
+  const { loggedin, userLoading } = useSelector((state) => state.userDetails);
   return (
     <>
       <Router>
@@ -50,62 +48,40 @@ const App = () => {
               </Wrapper>
             }
           />
-
-          {/* <Route
-            path="/post/:post_id"
-            element={
-              <Wrapper>
-                <PostDetails />
-              </Wrapper>
-            }
-          /> */}
-          <Route
-            element={
-              <Wrapper>
-                <ProtectedRoute user={loggedin} />
-              </Wrapper>
-            }
-          >
             <Route
-              path="/notification"
-              element={
-                // <Wrapper>
-                  <Notifications />
-                // </Wrapper>
-              }
-            />
-
-            <Route
-              path="/home"
-              element={
-                // <Wrapper>
-                  <Home />
-                // </Wrapper>
-              }
-            />
-
-            <Route path="/messages" element={<MessageHome />} />
-            <Route
-              path="/messages/:message_id"
-              element={<MessageContent page="messageUserDetail" />}
-            />
-            <Route
-              path="/messages/ai/:message_id"
-              element={<MessageContent page="messageAiDetail" />}
-            />
-            <Route
-              path="/messages/ai"
-              element={<MessageContent page="messageAi" />}
-            />
-            <Route
-              path="/"
               element={
                 <Wrapper>
-                  <p>private page</p>
+                  <ProtectedRoute user={loggedin} isLoading={userLoading} />
                 </Wrapper>
               }
-            />
-          </Route>
+            >
+              <Route
+                path="/notification"
+                element={
+                  <Notifications />
+                }
+              />
+
+              <Route
+                path="/home"
+                element={
+                  <Home />
+                }
+              />
+
+              <Route path="/rooms" element={<MessageHome />} />
+              <Route
+                path="/rooms/:room_uuid"
+                element={<MessageContent page="messageUserDetail" />}
+              />
+
+              <Route
+                path="/"
+                element={
+                  <Home />
+                }
+              />
+            </Route>
           <Route
             path="*"
             element={

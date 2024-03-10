@@ -7,6 +7,9 @@ module.exports = {
     extend: {
       colors : {
         'homegreen' : '#3AAFA9'
+      },
+      fontFamily: {
+        'sans': ['Fantasy','ui-sans-serif', 'system-ui']
       }
     },
   },
