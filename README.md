@@ -14,19 +14,14 @@ fullstack building of moderated room. In this project, users become administrato
 ![](./img/notification.PNG)              |  ![](./img/Capture1.PNG) 
 
 
-### deployed website
-
->  [pending]() 
-
-
 ### Built With
 
 - [React](https://es.reactjs.org/)
-- [express]
+- [express]()
 - [HTML](https://www.w3schools.com/html/)
 - [CSS](https://www.w3schools.com/css/)
 - [JS](https://www.javascript.com/)
-- [Node.js]
+- [Node.js]()
 
 ## Project Setup
 
@@ -62,6 +57,9 @@ fullstack building of moderated room. In this project, users become administrato
    ```sh
    npm start
    ```
+### Api documentation
+| server is running on localhost:3000
+| api documentaion can be found here [http://localhost:3000/api-docs/](http://localhost:3000/api-docs/)
 
 ### Frontend Setup
 
