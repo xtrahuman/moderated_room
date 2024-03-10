@@ -57,9 +57,10 @@ fullstack building of moderated room. In this project, users become administrato
    ```sh
    npm start
    ```
+
 ### Api documentation
-| server is running on localhost:3000
-| api documentaion can be found here [http://localhost:3000/api-docs/](http://localhost:3000/api-docs/)
+
+- if backend server is successful running on localhost:3000, api documentaion can be found here [http://localhost:3000/api-docs/](http://localhost:3000/api-docs/)
 
 ### Frontend Setup
 
