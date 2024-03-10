@@ -6,7 +6,7 @@ fullstack building of moderated room. In this project, users become administrato
 
  home page                               |  user rooms page
 :---------------------------------------:|:---------------------------------------:
-![](./img/image.PNG)                     |  ![](./img/Capture.PNG) 
+![](./img/image.png)                     |  ![](./img/Capture.PNG) 
 
 
  notification page                       |  rooms details page
