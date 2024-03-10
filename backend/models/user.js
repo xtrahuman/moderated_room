@@ -1,5 +1,5 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model, Sequelize } = require("sequelize");
 const bcrypt = require("bcryptjs");
 
 module.exports = (sequelize, DataTypes) => {
@@ -49,6 +49,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      uuid: {
+        type: DataTypes.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false,
+        unique: true
+      },
     },
     {
       sequelize,
@@ -67,3 +73,4 @@ module.exports = (sequelize, DataTypes) => {
 
   return User;
 };
+

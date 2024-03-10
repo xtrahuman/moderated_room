@@ -1,10 +1,12 @@
-const { Group } = require("../models");
-const { GroupMembership } = require("../models");
+const { Group, GroupMembership } = require("../models");
 
 // Get all groups
 exports.getAllGroups = async (req, res) => {
   try {
-    const groups = await Group.findAll();
+    const groups = await Group.findAll({
+      attributes: { exclude: ["content"] }, // Exclude sensitive fields
+      raw: true, // Fetch raw data from the database
+    });
     res.json({ groups, user: req.userId });
   } catch (error) {
     console.error(error);
@@ -14,10 +16,35 @@ exports.getAllGroups = async (req, res) => {
 
 // Get a specific group by ID
 exports.getGroupById = async (req, res) => {
+
   try {
-    const group = await Group.findByPk(req.params.id);
+
+    let group = await Group.findOne({
+      attributes: { exclude: ["content"] }, // Exclude sensitive fields
+      raw: true, // Fetch raw data from the database
+      where: {
+        uuid: req.params.uuid,
+      },
+    });
     if (!group) {
       return res.status(404).json({ message: "Group not found" });
+    };
+
+    const groupMembership = await GroupMembership.findOne({
+      where: {
+        userId: req.userId,
+        groupId: group.id,
+        verifyStatus: "verified",
+      },
+    });
+    if (!!groupMembership) {
+      group = await Group.findOne({
+        where: {
+          uuid: req.params.uuid,
+        },
+      });
+    } else {
+      
     }
 
     res.json(group);
@@ -41,7 +68,7 @@ exports.createGroup = async (req, res) => {
         groupId: group.id,
         userId: userId,
         role: "admin",
-        // Other attributes of the GroupMembership model
+        verifyStatus: "verified",
       });
     }
   } catch (error) {
@@ -53,7 +80,11 @@ exports.createGroup = async (req, res) => {
 // Update an existing group
 exports.updateGroup = async (req, res) => {
   try {
-    const group = await Group.findByPk(req.params.id);
+    const group = await Group.findOne({
+      where: {
+        uuid: req.params.uuid,
+      },
+    });
     if (!group) {
       return res.status(404).json({ message: "Group not found" });
     }
@@ -68,7 +99,11 @@ exports.updateGroup = async (req, res) => {
 // Delete a group
 exports.deleteGroup = async (req, res) => {
   try {
-    const group = await Group.findByPk(req.params.id);
+    const group = await Group.findOne({
+      where: {
+        uuid: req.params.uuid,
+      },
+    });
     if (!group) {
       return res.status(404).json({ message: "Group not found" });
     }

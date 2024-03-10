@@ -8,10 +8,21 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      role: {
-        type: Sequelize.ENUM('admin', 'member','moderator'),
+      uuid: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         allowNull: false,
-        defaultValue: 'member'
+        unique: true
+      },
+      role: {
+        type: Sequelize.ENUM('admin', 'non_member','moderator'),
+        allowNull: false,
+        defaultValue: 'non_member'
+      },
+      verifyStatus: {
+        type: Sequelize.ENUM('verified', 'unverified','awaiting_verification'),
+        allowNull: false,
+        defaultValue: 'unverified'
       },
       userId: {
         type: Sequelize.INTEGER,

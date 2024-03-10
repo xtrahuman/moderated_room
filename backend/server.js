@@ -1,5 +1,6 @@
 // server.js
 const express = require('express');
+const cors = require('cors');
 const { sequelize } = require('./models');
 const groupRoutes = require('./routes/groupRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -15,10 +16,11 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware, configurations, and other routes...
 
-// Start the server
 
 // Middleware
 // app.use(express.json());
+
+app.use(cors());
 
 app.use(bodyParser.json()); // Parse JSON request bodies
 app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded request bodies
@@ -40,7 +42,8 @@ app.use('/api/group-memberships', groupMembershipRoutes);
 app.use('/api/join-notifications', joinNotificationRoutes);
 
 
-// Start server
+// Start the server
+
 app.listen(PORT, async () => {
   console.log(`Server is running on port ${PORT}`);
   try {

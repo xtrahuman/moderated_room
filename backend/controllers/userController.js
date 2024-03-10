@@ -6,8 +6,12 @@ const UserController = {
   // Get all users
   getAllUsers: async (req, res) => {
     try {
-      const users = await User.findAll();
-      res.json({users: users, userId: req.userId});
+      const users = await User.findAll({
+        attributes: { exclude: ['password', 'email'] }, // Exclude sensitive fields
+        raw: true // Fetch raw data from the database
+      });
+  
+      res.json({ users, userId: req.userId });
     } catch (error) {
       console.error('Error fetching users:', error);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -16,9 +20,15 @@ const UserController = {
 
   // Get user by ID
   getUserById: async (req, res) => {
-    const { id } = req.params;
+    const { uuid } = req.params;
     try {
-      const user = await User.findByPk(id);
+      const user = await User.findOne({
+        attributes: { exclude: ['password', 'email'] }, // Exclude sensitive fields
+        raw: true, // Fetch raw data from the database,
+        where: {
+          uuid: uuid,
+        },
+      });;
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }
@@ -32,10 +42,14 @@ const UserController = {
 
   // Update user by ID
   updateUser: async (req, res) => {
-    const { id } = req.params;
+    const { uuid } = req.params;
     const { firstName, lastName, email, username,password } = req.body;
     try {
-      const user = await User.findByPk(id);
+      const user = await User.findOne({
+        where: {
+          uuid: uuid,
+        },
+      });;
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }
@@ -49,9 +63,13 @@ const UserController = {
 
   // Delete user by ID
   deleteUser: async (req, res) => {
-    const { id } = req.params;
+    const { uuid } = req.params;
     try {
-      const user = await User.findByPk(id);
+      const user = await User.findOne({
+        where: {
+          uuid: uuid,
+        },
+      });;
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }

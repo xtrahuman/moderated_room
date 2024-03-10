@@ -6,8 +6,10 @@ const { authJwt } = require("../middleware");
 
 // Routes
 router.get('/',[authJwt.verifyToken], groupMembershipController.getAllGroupMemberships);
-router.get('/:id',[authJwt.verifyToken], groupMembershipController.getGroupMembershipById);
-router.post('/',[authJwt.verifyToken], groupMembershipController.createGroupMembership);
-router.delete('/:id',[authJwt.verifyToken], groupMembershipController.deleteGroupMembership);
+router.get('/awaiting',[authJwt.verifyToken], groupMembershipController.getAllAwaitingGroupMemberships);
+router.get('/:uuid',[authJwt.verifyToken], groupMembershipController.getGroupMembershipById);
+router.put('/:uuid',[authJwt.verifyToken], groupMembershipController.updateGroupMembership);
+router.post('/join',[authJwt.verifyToken], groupMembershipController.joinGroupMembership);
+router.delete('/:uuid',[authJwt.verifyToken], groupMembershipController.deleteGroupMembership);
 
 module.exports = router;

@@ -1,5 +1,5 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model,Sequelize } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class GroupMembership extends Model {
     /**
@@ -15,11 +15,30 @@ module.exports = (sequelize, DataTypes) => {
   }
   GroupMembership.init(
     {
+      uuid: {
+        type: DataTypes.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false,
+        unique: true
+      },
+      groupId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       role: {
         type: DataTypes.ENUM("admin", "member", "moderator"),
         allowNull: false,
-        defaultValue: "member", // Set default value to 'member'
+        defaultValue: "non_member", // Set default value to 'member'
       },
+      verifyStatus: {
+        type: DataTypes.ENUM('verified', 'unverified','awaiting_verification'),
+        allowNull: false,
+        defaultValue: 'unverified'
+      }
     },
     {
       sequelize,

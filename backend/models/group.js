@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model
+  Model, Sequelize
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Group extends Model {
@@ -24,6 +24,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Group.init({
+    uuid: {
+      type: DataTypes.UUID,
+      defaultValue: Sequelize.UUIDV4,
+      allowNull: false,
+      unique: true
+    },
     description: DataTypes.STRING,
     name: DataTypes.STRING,
     content: DataTypes.TEXT

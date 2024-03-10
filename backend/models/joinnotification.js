@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model
+  Model, Sequelize
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class JoinNotification extends Model {
@@ -16,6 +16,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   JoinNotification.init({
+    uuid: {
+      type: DataTypes.UUID,
+      defaultValue: Sequelize.UUIDV4,
+      allowNull: false,
+      unique: true
+    },
     userId: DataTypes.INTEGER,
     groupId: DataTypes.INTEGER
   }, {
