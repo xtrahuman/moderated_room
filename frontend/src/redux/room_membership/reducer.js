@@ -1,48 +1,62 @@
 import {
   ROOMMEMBERSHIPSTART,
   GETALLROOMMEMBERSHIPSUCCESS,
-  GETROOMMEMBERSHIPSUCCESS,
+  GETAWAITINROOMMEMBERSHIPSUCCESS,
   ROOMMEMBERSHIPFAILURE,
+  UPDATEROOMMEMBERSUCCESS,
+  DELETEROOMMEMBERSUCCESS,
   JOINROOMMEMBERSUCCESS,
 } from "./action";
 
 const INITIAL_STATE = {
-  like: {},
-  likes: [],
+  awaitingRoomMember: [],
+  roomMembers: [],
   error: null,
-  likeLoading: false,
+  roomMemberLoading: false,
   message: null,
 };
 
-const likeReducer = (state = INITIAL_STATE, action) => {
+const roomMemberReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ROOMMEMBERSHIPSTART:
       return {
         ...state,
-        likeLoading: true,
+        roomMemberLoading: true,
       };
     case GETALLROOMMEMBERSHIPSUCCESS:
       return {
         ...state,
-        likeLoading: false,
-        likes: action.payload,
+        roomMemberLoading: false,
+        roomMembers: action.payload,
       };
-    case GETROOMMEMBERSHIPSUCCESS:
+    case GETAWAITINROOMMEMBERSHIPSUCCESS:
       return {
         ...state,
-        likeLoading: false,
-        like: action.payload,
+        roomMemberLoading: false,
+        awaitingRoomMember: action.payload,
+      };
+    case UPDATEROOMMEMBERSUCCESS:
+      return {
+        ...state,
+        roomMemberLoading: false,
+        message: action.payload,
+      };
+    case DELETEROOMMEMBERSUCCESS:
+      return {
+        ...state,
+        roomMemberLoading: false,
+        message: action.payload,
       };
     case JOINROOMMEMBERSUCCESS:
       return {
         ...state,
-        likeLoading: false,
+        roomMemberLoading: false,
         message: action.payload,
       };
     case ROOMMEMBERSHIPFAILURE:
       return {
         ...state,
-        likeLoading: false,
+        roomMemberLoading: false,
         error: action.payload,
         message: null
       };
@@ -51,4 +65,4 @@ const likeReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default likeReducer;
+export default roomMemberReducer;

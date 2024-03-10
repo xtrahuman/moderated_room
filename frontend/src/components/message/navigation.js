@@ -6,8 +6,11 @@ import { FaPen } from "react-icons/fa";
 const Navigation = () => {
   const dispatch = useDispatch();
   const { messageOpen } = useSelector((state) => state.domStatus);
-  const { messageSummary } = useSelector((state) => state.messageReducer);
-  const { conversations } = useSelector((state) => state.aiMessageReducer);
+  const { rooms } = useSelector((state) => state.roomReducer);
+ 
+  const getFirstLetter = (roomName) => {
+    return roomName.charAt(0).toUpperCase()
+  }
 
   return (
     <div
@@ -16,56 +19,51 @@ const Navigation = () => {
       }`}
     >
       <h1 className="text-xl pt-6 md:px-3 md:text-left text-center font-bold h-[9%]">
-        Messages
+        Rooms
       </h1>
       <div className="p-3 h-[50%] last:border-b-[red] last:pb-0 last:mb-0 overflow-y-auto">
-        {messageSummary?.length === 0 ? (
+        {rooms?.group?.length === 0 ? (
           <p className="text-center pt-5">you have no messages</p>
         ) : (
-          messageSummary?.map(
-            ({
-              username,
-              avatarUrl,
-              last_message,
-              recipient_id,
-              created_at,
-            }) => (
+          rooms?.groups?.map(
+            ({ id, name, description, created_at, uuid}) => (
               <div
-                key={username}
+                key={id}
                 className="flex mb-3 border-b-2 pb-2 !border-[#f3f7f0] w-full"
               >
-                <Link
-                  role="link"
-                  to={`/profile/${recipient_id}`}
+                <div
                   style={{
                     width: "max-content",
                     display: "flex",
                     height: "100%",
                   }}
                 >
-                  <img
-                    src={
-                      process.env.PUBLIC_URL + `/project_avatar/${avatarUrl}`
-                    }
-                    alt={username}
+                  <div
                     style={{
                       width: "40px",
                       height: "40px",
                       maxWidth: "40px",
                       borderRadius: "50%",
                       marginRight: "12px",
+                      fontSize: '30px',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center'
                     }}
-                  />
-                </Link>
+                    className="bg-homegreen text-white"
+                  >
+                    <span>{getFirstLetter(name)}</span>
+                  </div>
+                </div>
                 <Link
                   className="flex flex-col chat-card w-full"
-                  to={`/messages/${recipient_id}`}
+                  to={`/messages/${uuid}`}
                   onClick={() => dispatch(handleMessageInterface(true))}
                 >
-                  <h2 className="crop-text font-bold">{username}</h2>
+                  <h2 className="crop-text font-bold">{name}</h2>
 
                   <div className="flex w-full text-sm justify-between">
-                    <p className="crop-text">{last_message}</p>
+                    <p className="crop-text">{description}</p>
                     <p className="ml-2">
                       {formatDateAndTime(created_at, "chatNav")}
                     </p>
@@ -76,30 +74,22 @@ const Navigation = () => {
           )
         )}
       </div>
-      <div className="flex pt-2 justify-between px-3 h-[6%]">
-        <h2 className="text-xl font-bold">Chat Assistant</h2>
-        <Link
-          to="/messages/ai"
-          onClick={() => dispatch(handleMessageInterface(true))}
-          className="text-homegreen flex pointer-cursor"
-        >
-          <span>new</span>
-          <FaPen />
-        </Link>
+      <div className="pt-2 px-3 h-[6%]">
+        <h2 className="text-xl font-bold">Pending Room</h2>
       </div>
       <div className="p-3 h-[35%] last:border-b-[red] last:pb-0 last:mb-0 overflow-y-auto">
-        {conversations?.length === 0 ? (
+        {rooms?.groups?.length === 0 ? (
           <p className="text-center pt-5">you have no ai messages</p>
         ) : (
-          conversations?.map(
-            ({ username, avatarUrl, content, id, updated_at }) => (
+          rooms?.groups?.map(
+            ({ id, name, description,uuid, updated_at }) => (
               <div
                 key={id}
                 className="flex mb-3 border-b-2 pb-2 !border-[#f3f7f0] w-full"
               >
                 <Link
                   role="link"
-                  to={`/messages/ai/${id}`}
+                  to={`/messages/${uuid}`}
                   style={{
                     width: "max-content",
                     display: "flex",
@@ -108,9 +98,9 @@ const Navigation = () => {
                 >
                   <img
                     src={
-                      process.env.PUBLIC_URL + `/project_avatar/${avatarUrl}`
+                      process.env.PUBLIC_URL + `/project_avatar/avatar1`
                     }
-                    alt={username}
+                    alt={name}
                     style={{
                       width: "40px",
                       height: "40px",
@@ -120,22 +110,20 @@ const Navigation = () => {
                     }}
                   />
                 </Link>
-                <Link
+                <div
                   className="flex flex-col chat-card w-full"
-                  to={`/messages/ai/${id}`}
-                  onClick={() => dispatch(handleMessageInterface(true))}
                 >
-                  <h2 className="crop-text font-bold">{username}</h2>
+                  <h2 className="crop-text font-bold">{name}</h2>
 
                   <div className="flex w-full text-sm justify-between">
                     <p className="crop-text lg:max-w-[7.5rem] md:max-w-[5.3rem]">
-                      {content}
+                      {description}
                     </p>
                     <p className="ml-2">
                       {formatDateAndTime(updated_at, "chatNav")}
                     </p>
                   </div>
-                </Link>
+                </div>
               </div>
             )
           )

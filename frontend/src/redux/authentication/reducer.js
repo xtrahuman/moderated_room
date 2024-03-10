@@ -4,18 +4,18 @@ import {
   GETLOGINFAILURE,
   LOGOUT,
   AUTHENTICATED,
-  GETOTHERUSER,
+  GETOTHERUSERS,
   GETUSERSTART,
   GETUSERFAILURE,
 } from "./action";
 
 const INITIAL_STATE = {
   user: {},
-  otherUser: {},
+  otherUsers: [],
   error: null,
-  otherUserError: null,
+  otherUsersError: null,
   userLoading: false,
-  otherUserLoading: false,
+  otherUsersLoading: false,
   loggedin: false,
 };
 
@@ -32,8 +32,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case GETUSERSTART:
       return {
         ...state,
-        otherUserLoading: true,
-        otherUserError: null,
+        otherUsersLoading: true,
+        otherUsersError: null,
       };
     case GETLOGINSUCCESS:
     case AUTHENTICATED:
@@ -44,12 +44,12 @@ const userReducer = (state = INITIAL_STATE, action) => {
         loggedin: true,
         error: null,
       };
-    case GETOTHERUSER:
+    case GETOTHERUSERS:
       return {
         ...state,
-        otherUserLoading: false,
-        otherUser: action.payload,
-        otherUserError: null,
+        otherUsersLoading: false,
+        otherUsers: action.payload,
+        otherUsersError: null,
       };
     case GETLOGINFAILURE:
       return {
@@ -62,8 +62,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
     case GETUSERFAILURE:
       return {
         ...state,
-        otherUserLoading: false,
-        otherUserError: action.payload,
+        otherUsersLoading: false,
+        otherUsersError: action.payload,
       };
     case LOGOUT:
       return {

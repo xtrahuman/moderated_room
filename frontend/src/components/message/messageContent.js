@@ -24,10 +24,6 @@ const MessageContent = ({page}) => {
       <div className={`md:w-[60%] md:block min-h-screen ${messageOpen ? 'w-[100%] mobile-block' : 'w-[0%] mobile-hidden'}`}>
       {page === 'messageUserDetail' ? (
         <UserChatApp page='messageUserDetail' />
-      ) : page === 'messageAiDetail' ? (
-        <AiChatApp page='messageAiDetail' />
-      ) : page === 'messageAi' ? (
-        <AiChatAppIndex page='messageAi' />
       ) : <UserInteraction/>
       }
         

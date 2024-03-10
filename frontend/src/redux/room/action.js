@@ -2,6 +2,7 @@ import axios from "axios";
 import { getUserFunc } from "../authentication/action";
 import { localBackendUrl } from "../../utility";
 import { getCommentFunc } from "../comment/action";
+import { get_all_room_membership } from "../room_membership/action";
 // import { getRoomLike } from "../room_like/action";
 // import { getAllComment } from "../comment/action";
 export const GETROOMSUCCESS = "room/get/success";
@@ -119,6 +120,7 @@ export const getAllRoom = (loggedInUser) => async (dispatch) => {
     // );
 
     dispatch(getRoom(rooms));
+    dispatch(get_all_room_membership(loggedInUser?.token))
   } catch (err) {
     dispatch(makeroomFailure(err.response?.data?.error));
   }

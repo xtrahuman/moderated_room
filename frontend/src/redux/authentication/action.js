@@ -1,7 +1,7 @@
 import axios from "axios";
 import { localBackendUrl } from "../../utility";
 export const AUTHENTICATED  = "authenticated/getstatus";
-export const GETOTHERUSER  = "otherUser/getstatus";
+export const GETOTHERUSERS  = "otherUsers/getprofile/success";
 export const GETLOGINSTART = "login/getall/start";
 export const GETUSERSTART = "otherUser/get/start";
 export const GETLOGINSUCCESS = "login/getall/success";
@@ -17,13 +17,17 @@ const getOtherUserStart = () => ({
   type: GETUSERSTART,
 });
 
+const getUserStart = () => ({
+  type: GETUSERSTART,
+});
+
 export const getUserProfile  = (user) => ({
   type: AUTHENTICATED,
   payload: user
 });
 
-export const getOtherUserProfile  = (user) => ({
-  type: GETOTHERUSER,
+export const getOtherUsersProfile  = (user) => ({
+  type: GETOTHERUSERS,
   payload: user
 });
 
@@ -49,7 +53,7 @@ const getloginSuccess = (result) => {
 
 export const getUserDetails = (userToken,userId,onSuccess) => (dispatch) => {
   let user;
-  dispatch(getloginStart());
+  dispatch(getUserStart());
 
   let headers ={};
   if (userToken) {
@@ -70,8 +74,8 @@ export const getUserDetails = (userToken,userId,onSuccess) => (dispatch) => {
     });
 };
 
-export const getOtherUserDetails = (userToken, userId) => (dispatch) => {
-  let user;
+export const getOtherUserDetails = (userToken) => (dispatch) => {
+  let users;
   dispatch(getOtherUserStart());
 
   let headers ={};
@@ -82,10 +86,10 @@ export const getOtherUserDetails = (userToken, userId) => (dispatch) => {
   }
 
   axios
-    .get(`${localBackendUrl}/users/${userId}`, {headers})
+    .get(`${localBackendUrl}/users`, {headers})
     .then((response) => {
-      user = response.data;
-      dispatch(getOtherUserProfile(user));
+      users = response.data;
+      dispatch(getOtherUsersProfile(users));
     })
     .catch((err) => {
       dispatch(getOtherUserFailure(err.response?.data?.error));
