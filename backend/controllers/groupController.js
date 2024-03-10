@@ -5,6 +5,7 @@ exports.getAllGroups = async (req, res) => {
   try {
     const groups = await Group.findAll({
       attributes: { exclude: ["content"] }, // Exclude sensitive fields
+      order: [['createdAt', 'DESC']],
       raw: true, // Fetch raw data from the database
     });
     res.json({ groups, user: req.userId });

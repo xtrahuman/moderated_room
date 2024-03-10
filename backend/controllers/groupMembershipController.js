@@ -5,7 +5,9 @@ const group = require("../models/group");
 const GroupMembershipController = {
   getAllGroupMemberships: async (req, res) => {
     try {
-      const groupMemberships = await GroupMembership.findAll();
+      const groupMemberships = await GroupMembership.findAll({
+      order: [['createdAt', 'DESC']],
+      });
       res.json(groupMemberships);
     } catch (error) {
       console.error("Error fetching groupMemberships:", error);
@@ -17,6 +19,7 @@ const GroupMembershipController = {
     try {
       // Fetch the user's group memberships where they are admin or moderator
       const userGroupMemberships = await GroupMembership.findAll({
+        order: [['createdAt', 'DESC']],
         where: {
           userId: req.userId,
           role: ['admin', 'moderator'] // Fetch only admin or moderator roles

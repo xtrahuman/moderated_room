@@ -8,6 +8,7 @@ const UserController = {
     try {
       const users = await User.findAll({
         attributes: { exclude: ['password', 'email'] }, // Exclude sensitive fields
+        order: [['createdAt', 'DESC']],
         raw: true // Fetch raw data from the database
       });
   
