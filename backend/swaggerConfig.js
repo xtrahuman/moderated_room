@@ -6,7 +6,7 @@ const options = {
     info: {
       title: 'Moderated Room API built with Express.js',
       version: '1.0.0',
-      description: 'API Documentation for Express Swagger Moderated Room Application',
+      description: 'API Documentation for Moderated Room Application',
     },
     components: {
         securitySchemes: {
