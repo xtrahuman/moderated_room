@@ -43,7 +43,7 @@ fullstack building of moderated room. In this project, users become administrato
    cd backend
    ```
 
-2. Install NPM packages for Front-end
+2. Install NPM packages for backend
    ```sh
    npm install
    ```
@@ -78,6 +78,14 @@ fullstack building of moderated room. In this project, users become administrato
    ```sh
    npm start
    ```
+### Note
+
+1. you need to create and signin with two different users
+
+2. one user creates group(admin) and accept other user to group
+
+3. other user request to join group
+
 ## Author
 
 👤 **Okpara Tochukwu**
