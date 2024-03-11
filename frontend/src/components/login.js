@@ -15,7 +15,6 @@ function Login({ page }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     dispatch(login(username, password, setUsername, setPassword, () => navigate(page)));
   };
 
@@ -64,9 +63,12 @@ function Login({ page }) {
         />
         <p
           className={`${
-            error && !userLoading ? "" : "hidden"
+            error 
+            &&
+            !userLoading ? "" : "hidden"
           } text-center text-[red]`}
         >
+
           {error}
         </p>
 

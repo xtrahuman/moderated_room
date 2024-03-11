@@ -144,7 +144,7 @@ export const login = (username, password, setUsername, setPassword, navigate) =>
       setPassword('');
     })
     .catch((err) => {
-      dispatch(getloginFailure(err.response?.data?.error));
+      dispatch(getloginFailure(err.response?.data?.message));
     });
 };
 
