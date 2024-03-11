@@ -70,11 +70,11 @@ function Login({ page }) {
           {error}
         </p>
 
-        <div className="text-sm text-center relative mt-5">
+        {/* <div className="text-sm text-center relative mt-5">
           <p>please Signup or use the details below to test login</p>
           <p>username: xtrahuman</p>
           <p>password: 123456789</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
